@@ -1,0 +1,106 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "MyProducts";
+}
+
+@section Scripts{
+    <script> 
+        
+        function myFunction(ele) {
+          var name = ele.dataset.name;
+          var id = ele.dataset.id;
+          if (confirm("You are about to delete the product: \n" + name + " \n" + "To confirm press OK")) {
+            $.post("@Url.Action("DeleteProduct")", { id: id },function(){
+                window.location.reload();
+            }) ;
+          }
+        }
+
+    </script>
+}
+
+<div style = "display:flex; align-items:center" >
+    <h1>My Products</h1>
+    @Html.ActionLink("Add Product","AddProduct","Product",null, new {@class="btn btn-primary", style="margin-left: auto;"})
+</div>
+
+<br/>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Brand</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Category</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(Product product in Model){
+        <tr>
+          <td style = "width: 15%;">@product.Title</td>
+          <td>@product.Brand</td>
+          <td style="color:#ff0000">$@product.Price</td>
+          
+          <td>@product.Quantity</td>
+          <td>@product.Category.Name</td>
+          @*<td style = "width: 11%">@Html.ActionLink("Details", "Detail", "Instructor",new {Id = instructor.Id},new {@class="btn btn-outline-success"})</td>*@
+          <td style = "width: 11%">@Html.ActionLink("Edit", "EditProduct", "Product",new {id = product.Id},new {@class="btn btn-outline-primary"})</td>
+          @*<td style = "width: 11%">@Html.ActionLink("Delete", "Delete", "Instructor",new {Id = instructor.Id},new {@class="btn btn-outline-danger"})</td>*@
+          <td style = "width: 11%"> <button data-name = "@product.Title" data-id = @product.Id onclick="myFunction(this)" type="button" id="btnDeId" class="btn btn-outline-danger">Delete</button> </td>
+        </tr>
+    }
+    
+  </tbody>
+</table>
+
+@*@for(int i = 0; i < Model.Count; i++)
+{
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model[i].Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model[i].Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model[i].Brand)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model[i].Brand)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model[i].Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model[i].Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model[i].Quantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model[i].Quantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model[i].Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model[i].Category.Name)
+        </dd>
+    </dl>
+</div>   
+<hr/>
+}*@
+
+@*<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@
