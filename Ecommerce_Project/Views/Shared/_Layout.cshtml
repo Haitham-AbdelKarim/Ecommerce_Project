@@ -31,7 +31,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <form asp-action = "Logout" asp-controller = "User" method = "post">
-                            Welcome @Html.ActionLink(@User.FindFirstValue(ClaimTypes.Name),"EditProfile","User")
+                            Welcome @Html.ActionLink(@User.FindFirstValue(ClaimTypes.Name),"ShowProfile","User")
                             <button type = "submit" class = "ml-2 btn btn-link ">Logout</button>
                         </form>
                     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce_Project.Models
@@ -8,6 +9,7 @@ namespace Ecommerce_Project.Models
         [Key]
         public int Id { get; set; }
         [Required , MaxLength(200)]
+        [Remote("UniqueTitle", "Product", ErrorMessage = "This Name is already exits ")]
         public string Title { get; set; }
         public string? Brand { get; set; }
         [Required]

@@ -68,6 +68,7 @@ namespace Ecommerce_Project.Controllers
                 await HttpContext.SignInAsync("cookie", claimsPrincipal);
                 return RedirectToAction("Index", "Home");
             }
+            ViewData["error"] = "Wrong Email or Password";
             return View(user);
         }
 
@@ -76,6 +77,14 @@ namespace Ecommerce_Project.Controllers
         {
             await HttpContext.SignOutAsync("cookie");
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ShowProfile()
+        {
+            User? user = db.User.FirstOrDefault(u => u.Email == getEmail());
+            return View(user);
         }
 
         [HttpGet]
@@ -111,6 +120,19 @@ namespace Ecommerce_Project.Controllers
                 return RedirectToAction("Index","Home");
             }
             return View(user);
+        }
+
+        public IActionResult UniqueName(string name)
+        {
+            User? user = db.User.FirstOrDefault(x => x.Name == name);
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
         }
     }
 }

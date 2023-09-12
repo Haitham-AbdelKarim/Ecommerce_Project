@@ -91,5 +91,18 @@ namespace Ecommerce_Project.Controllers
             return;
         }
 
+        public IActionResult UniqueTitle(string title)
+        {
+            Product? product = db.Product.FirstOrDefault(x => x.Title == title);
+            if(product == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+
     }
 }
