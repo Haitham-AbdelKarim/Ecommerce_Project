@@ -26,6 +26,7 @@ namespace Ecommerce_Project.Controllers
         {
             string email = getEmail();
             List<Product>? products = db.User.Include(x => x.Products).FirstOrDefault(x => x.Email == email)?.Products?.ToList();
+            products = products.Where(p => p.Quantity > 0).ToList();
             products?.ForEach(x => x.Category = db.Category.FirstOrDefault(c => c.Id == x.CategoryId));
             return View(products);
         }
@@ -75,7 +76,7 @@ namespace Ecommerce_Project.Controllers
         public IActionResult EditProduct(int id)
         {
             Product? product = db.Product.FirstOrDefault(p => p.Id == id);
-            if(product == null || product?.OwnerEmail != getEmail())
+            if(product == null || product?.OwnerEmail != getEmail() || product.Quantity == 0)
             {
                 return View("NotFound");
             }
@@ -140,15 +141,16 @@ namespace Ecommerce_Project.Controllers
             Product? product = db.Product.FirstOrDefault(p => p.Id == id);
             if (product != null)
             {
-                if(product.Image != "NotFound.jpg")
-                {
-                    string fullPath = _hostingEnvironment.WebRootPath + "\\Images\\Product\\";
-                    if (System.IO.File.Exists(fullPath + product.Image))
-                    {
-                        System.IO.File.Delete(fullPath + product.Image);
-                    }
-                }
-                db.Remove(product);
+                //if(product.Image != "NotFound.jpg")
+                //{
+                //    string fullPath = _hostingEnvironment.WebRootPath + "\\Images\\Product\\";
+                //    if (System.IO.File.Exists(fullPath + product.Image))
+                //    {
+                //        System.IO.File.Delete(fullPath + product.Image);
+                //    }
+                //}
+                //db.Remove(product);
+                product.Quantity = 0;
                 db.SaveChanges();
             }
             return;
@@ -157,7 +159,7 @@ namespace Ecommerce_Project.Controllers
         public IActionResult UniqueTitle(string title,int id)
         {
             Product? product = db.Product.FirstOrDefault(x => x.Title == title);
-            if(product == null || product.Id == id)
+            if(product == null || product.Id == id || product.Quantity == 0)
             {
                 return Json(true);
             }
@@ -178,7 +180,7 @@ namespace Ecommerce_Project.Controllers
             List<Category> categories = db.Category.ToList();
             Category allCategories = new Category() { Id = -1, Name = "All" };
             categories.Insert(0, allCategories);
-            List<Product> products = db.Product.Include(x => x.Category).ToList();
+            List<Product> products = db.Product.Include(x => x.Category).Where(p => p.Quantity > 0).ToList();
             ViewData["Categories"] = categories;
             if (search == null)
             {

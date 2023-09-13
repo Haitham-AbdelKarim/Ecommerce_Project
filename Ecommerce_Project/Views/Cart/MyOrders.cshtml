@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "MyOrders";
+}
+
+<h1>MyOrders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            int totalPrice = 0;
+        }
+        @for(int i = 0; i < Model.Count; i++){
+            <tr>
+                <td><img class="card-img-top" src="/Images/Product/@Model[i].Product.Image" alt="Card image cap" style="width:auto;height:auto; max-width:100%; max-height:120px; display: block; margin: auto;"></td>
+                <td>@Model[i].Product.Title</td>
+                <td style="color:green">$@Model[i].Product.Price</td>
+                <td>@Model[i].Quantity</td>
+                @{
+                    int totalPriceForItem = Model[i].Product.Price * Model[i].Quantity;
+                    totalPrice += totalPriceForItem;
+                }
+                <td style="color:green">$@totalPriceForItem</td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total price:</td>
+            <td style="color:green">$@totalPrice</td>
+        </tr>
+    </tbody>
+</table>

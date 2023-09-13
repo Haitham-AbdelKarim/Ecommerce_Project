@@ -1,0 +1,108 @@
+﻿@model List<Cart>
+@{
+    ViewData["Title"] = "MyCart";
+    List<int> IDs = Model.Select(c => c.ProductId).ToList();
+}
+
+@section Scripts{
+    <script> 
+        
+        function myFunction(ele) {
+          var id = ele.dataset.id;
+          var price = ele.dataset.price;
+          var quantity = ele.value;
+          var totalPriceForItem =  parseInt(price) * parseInt(quantity);
+          var totalPriceForItemBeforeChanges = parseInt(price) * parseInt(ele.dataset.quantity);
+          var element = document.getElementById("totalPrice");
+          var totalPrice = parseInt(totalPriceForItem) - parseInt(totalPriceForItemBeforeChanges) + parseInt(element.dataset.value);
+          element.dataset.value = totalPrice;
+          element.innerHTML = "$" + totalPrice.toString();
+          //$(totalPriceId).text((price*quantity).toString());
+          document.getElementById(id.toString()).innerHTML = "$" + totalPriceForItem.toString();
+          ele.dataset.quantity = ele.value;
+        }
+
+        function changeTypeToSave(ele){
+            var element = document.getElementById("type");
+            element.value = "saveChanges"
+        }
+
+        function changeTypeTocheckout(ele){
+            var element = document.getElementById("type");
+            element.value = "checkout"
+        }
+
+    </script>
+}
+
+<h1>MyCart</h1>
+<br/>
+<div class="row">
+    <div class="form-inline">
+        <form asp-action="MyCart" asp-controller="Cart">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Availabel Quantity</th>
+                  <th scope="col">Quantity</th>
+                  @*<th scope="col">Total Price</th>*@
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @{
+                    int totalPrice = 0;
+                }
+                @for(int i = 0; i < Model.Count; i++){
+                    <tr>
+                      <td><img class="card-img-top" src="/Images/Product/@Model[i].Product.Image" alt="Card image cap" style="width:auto;height:auto; max-width:100%; max-height:120px; display: block; margin: auto;"></td>
+                      <td>@Model[i].Product.Title</td>
+                      <td style="color:green">$@Model[i].Product.Price</td>
+                      <td>@Model[i].Product.Quantity</td>
+                      <td><input name = "cart[@i].Quantity" class = "form-control" type = "number" value = @Model[i].Quantity min = 1 max = @Model[i].Product.Quantity
+                          onchange = "myFunction(this)" data-id = @Model[i].Product.Id data-price = @Model[i].Product.Price data-quantity = @Model[i].Quantity
+                          /></td>
+                        @{
+                            int totalPriceForItem = Model[i].Product.Price * Model[i].Quantity;
+                            totalPrice += totalPriceForItem;
+                        }
+                      <td id="@Model[i].ProductId" style="color:green">$@totalPriceForItem</td>
+                      <td>@Html.ActionLink("Remove","DeleteCartItem","Cart",new {id = @Model[i].Id},new {@class="btn btn-outline-danger"})</td>
+                    </tr>
+                    <input type="hidden" name = "cart[@i].Id" value = "@Model[i].Id">
+                    <input type="hidden" name = "cart[@i].UserEmail" value = "@Model[i].UserEmail">
+                    <input type="hidden" name = "cart[@i].ProductId" value = "@Model[i].ProductId">
+                    <input type="hidden" name = "cart[@i].IsOrdered" value = "@Model[i].IsOrdered">
+                    <input type="hidden" name = "cart[@i].Product" value = "@Model[i].Product">
+                    <input type="hidden" name = "type" id = "type" value = "checkout">
+
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total Price:</td>
+                    <td id="totalPrice" data-value = @totalPrice  style="color:green">$@totalPrice</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="form-group" style="margin:3px">
+                <input type="submit" value="Save changes" onclick = "changeTypeToSave(this)" class="btn btn-primary" />
+            </div>
+            <div class="form-group" style="margin:3px">
+                <input type="submit" value="CheckOut" onclick = "changeTypeTocheckout(this)" class="btn btn-success" />
+            </div>
+            @*@Html.ActionLink("CheckOut","DeleteCartItem","Cart",new {cart = @Model},new {@class="btn btn-success"})*@
+        </form>
+    </div>
+</div>
+
+@*<p style="display:inline">Total Price: <h5 id="totalPrice" style="color:green;display:inline">$@totalPrice</h5></p>*@
+

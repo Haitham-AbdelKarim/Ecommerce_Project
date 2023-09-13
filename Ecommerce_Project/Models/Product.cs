@@ -16,6 +16,7 @@ namespace Ecommerce_Project.Models
         [Required]
         public int Price { get; set; }
         [Range(1,UInt32.MaxValue)]
+        [Display(Name = "Available Quantity")]
         public int Quantity { get; set; }
         [ForeignKey("Owner")]
         public string OwnerEmail { get; set; }
@@ -25,7 +26,6 @@ namespace Ecommerce_Project.Models
         public virtual User? Owner { get; set; }
         public string? Image { get; set; }
         public virtual Category? Category { get; set; }
-        public virtual ICollection<Rating>? Rating { get; set; }
 
     }
 }

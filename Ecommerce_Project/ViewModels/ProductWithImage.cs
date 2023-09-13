@@ -27,7 +27,6 @@ namespace Ecommerce_Project.ViewModels
         [Display(Name = "Image")]
         public string? Image { get; set; }
         public virtual Category? Category { get; set; }
-        public virtual ICollection<Rating>? Rating { get; set; }
 
         public async Task<Product> toProductAsync()
         {
