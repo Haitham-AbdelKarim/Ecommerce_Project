@@ -30,9 +30,17 @@
                 <div class="mr-2">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        string? img = User.Claims.FirstOrDefault(c => c.Type == "image")?.Value;
+                        @*img ??= "default.jpg";*@
                         <form asp-action = "Logout" asp-controller = "User" method = "post">
-                            Welcome @Html.ActionLink(@User.FindFirstValue(ClaimTypes.Name),"ShowProfile","User")
-                            <button type = "submit" class = "ml-2 btn btn-link ">Logout</button>
+                            <div style = "display:flex; align-items:center">
+                                <button type = "button" onclick="window.location.href='/User/ShowProfile';" style = "display: flex; align-items: center; border-radius: 10%;" class = "btn btn-outline-success">
+                                    <img src = "/Images/User/@img" alt = "Image" width = "20px" height = "20px" style = "margin-right:5px";>
+                                    @*@Html.ActionLink(@User.FindFirstValue(ClaimTypes.Name),"ShowProfile","User")*@
+                                    @User.FindFirstValue(ClaimTypes.Name)
+                                </button>
+                                <button type = "submit" class = "ml-2 btn btn-link ">Logout</button>
+                            </div>
                         </form>
                     }
                     else

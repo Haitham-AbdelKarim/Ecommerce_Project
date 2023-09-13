@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Ecommerce_Project.Validation;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ecommerce_Project.Models
+namespace Ecommerce_Project.ViewModels
 {
-    public class User
+    public class UserWithImage
     {
         [Required]
         [Remote("UniqueName", "User", ErrorMessage = "This Name is already exits ")]
@@ -14,7 +14,7 @@ namespace Ecommerce_Project.Models
         //[UniqueEmail]
         public string Email { get; set; }
         public string Address { get; set; }
-        [Range(21,60)]
+        [Range(21, 60)]
         public int Age { get; set; }
         [StringLength(11)]
         public string Phone { get; set; }
@@ -22,7 +22,7 @@ namespace Ecommerce_Project.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; } = false;
         public string? image { get; set; } = "default.jpg";
-        public virtual ICollection<Cart>? Cart { get; set;}
-        public virtual ICollection<Product>? Products { get;}
+        [Display(Name ="Image")]
+        public IFormFile? img { get; set; }
     }
 }
