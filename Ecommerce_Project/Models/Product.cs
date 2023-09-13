@@ -9,8 +9,9 @@ namespace Ecommerce_Project.Models
         [Key]
         public int Id { get; set; }
         [Required , MaxLength(200)]
-        [Remote("UniqueTitle", "Product", ErrorMessage = "This Name is already exits ")]
+        [Remote("UniqueTitle", "Product", ErrorMessage = "This Name is already exits ",AdditionalFields = "Id")]
         public string Title { get; set; }
+        public string? Description { get; set; }
         public string? Brand { get; set; }
         [Required]
         public int Price { get; set; }
@@ -22,6 +23,7 @@ namespace Ecommerce_Project.Models
         public int CategoryId { get; set; }
 
         public virtual User? Owner { get; set; }
+        public string? Image { get; set; }
         public virtual Category? Category { get; set; }
         public virtual ICollection<Rating>? Rating { get; set; }
 
