@@ -178,7 +178,7 @@ namespace Ecommerce_Project.Controllers
         public IActionResult GetProducts(Search? search)
         {
             List<Category> categories = db.Category.ToList();
-            Category allCategories = new Category() { Id = -1, Name = "All" };
+            Category allCategories = new Category() { Id = -1, Name = "All Category" };
             categories.Insert(0, allCategories);
             List<Product> products = db.Product.Include(x => x.Category).Where(p => p.Quantity > 0).ToList();
             ViewData["Categories"] = categories;
