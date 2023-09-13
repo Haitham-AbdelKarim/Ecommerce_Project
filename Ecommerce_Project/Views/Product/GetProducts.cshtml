@@ -1,0 +1,57 @@
+﻿@model Ecommerce_Project.ViewModels.Search
+@{
+    ViewData["Title"] = "GetProducts";
+    List<Product> products = ViewBag.products;
+    SelectList CategoriesOptions = new SelectList(ViewBag.Categories,"Id","Name");
+}
+
+<br/>
+
+<div class="row">
+    <div class="form-inline">
+        <form asp-action="GetProducts">
+            <div class="form-group" style="margin:3px">
+                @*<label asp-for="Name" class="control-label"></label>*@
+                <input asp-for="Name" class="form-control" placeholder = "Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin:3px">
+                @*<label asp-for="MinPrice" class="control-label"></label>*@
+                <input asp-for="MinPrice" class="form-control" placeholder = "Min Price" />
+                <span asp-validation-for="MinPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin:3px">
+                @*<label asp-for="MaxPrice" class="control-label"></label>*@
+                <input asp-for="MaxPrice" class="form-control" placeholder = "Min Price" />
+                <span asp-validation-for="MaxPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin:3px">
+                @*<label asp-for="CategoryId" class="control-label"></label>*@
+                <select asp-for="CategoryId" class ="form-control" asp-items= "CategoriesOptions" style="appearance:listbox"></select>
+            </div>
+            <div class="form-group" style="margin:3px">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px;">
+    @foreach(Product product in products)
+    {
+        @*<div class="card-group" style="width: 20%; height:350px; margin: 2%">*@
+            <div class="card" style="">
+                <img class="card-img-top" src="/Images/Product/@product.Image" alt="Card image cap" style="width:auto;height:auto; max-width:100%; max-height:325px; display: block; margin: auto;">
+                <div class="card-body">
+                    @Html.ActionLink(@product.Title,"ProductDetails","Product",new {id = product.Id})
+                    @*<h5 class="card-title">@product.Title</h5>*@
+                    <p class="card-text" style="color:green">$@product.Price</p>
+                    @*@Html.ActionLink("Edit", "EditProduct", "Product",new {id = product.Id},new {@class="btn btn-outline-primary", style="margin:2px"})*@
+                    @*<button data-name = "@product.Title" data-id = @product.Id onclick="myFunction(this)" type="button" id="btnDeId" class="btn btn-outline-danger" style="margin:2px">Delete</button>*@
+                </div>
+            </div>
+        @*</div>*@
+    }
+
+</div>

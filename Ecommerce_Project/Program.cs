@@ -45,7 +45,7 @@ namespace Ecommerce_Project
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Product}/{action=GetProducts}/{id?}");
 
             app.Run();
         }

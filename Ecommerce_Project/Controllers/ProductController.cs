@@ -173,6 +173,43 @@ namespace Ecommerce_Project.Controllers
             return View(product);
         }
 
+        public IActionResult GetProducts(Search? search)
+        {
+            List<Category> categories = db.Category.ToList();
+            Category allCategories = new Category() { Id = -1, Name = "All" };
+            categories.Insert(0, allCategories);
+            List<Product> products = db.Product.Include(x => x.Category).ToList();
+            ViewData["Categories"] = categories;
+            if (search == null)
+            {
+                ViewBag.products = products;
+                return View(search);
+            }
+            else
+            {
+                if(search.Name != null && search.Name != "")
+                {
+                    products = products.Where(p => p.Title.ToLower().Contains(search.Name.Trim().ToLower())).ToList();
+                }
+                if(search.MinPrice >= 0)
+                {
+                    products = products.Where(p => p.Price >= search.MinPrice).ToList();
+                }
+                if(search.MaxPrice >= 0)
+                {
+                    products = products.Where(p => p.Price <= search.MaxPrice).ToList();
+                }
+                if( search.CategoryId > 0)
+                {
+                    products = products.Where(p => p.CategoryId == search.CategoryId).ToList();
+                }
+                ViewBag.products = products;
+                return View(search);
+
+            }
+            //List<Product>? products = db.Product.Include(x => x.Category).ToList();
+        }
+
 
     }
 }
