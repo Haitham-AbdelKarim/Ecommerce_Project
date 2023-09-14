@@ -59,7 +59,8 @@ namespace Ecommerce_Project.Controllers
             {
                 Cart? oldItem = db.Cart.FirstOrDefault(c => c.Id == cartItem.Id);
                 oldItem.Quantity = cartItem.Quantity;
-                if(type == "checkout")
+                db.SaveChanges();
+                if (type == "checkout")
                 {
                     oldItem.IsOrdered = true;
                     db.SaveChanges();

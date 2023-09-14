@@ -141,15 +141,6 @@ namespace Ecommerce_Project.Controllers
             Product? product = db.Product.FirstOrDefault(p => p.Id == id);
             if (product != null)
             {
-                //if(product.Image != "NotFound.jpg")
-                //{
-                //    string fullPath = _hostingEnvironment.WebRootPath + "\\Images\\Product\\";
-                //    if (System.IO.File.Exists(fullPath + product.Image))
-                //    {
-                //        System.IO.File.Delete(fullPath + product.Image);
-                //    }
-                //}
-                //db.Remove(product);
                 product.Quantity = 0;
                 db.SaveChanges();
             }
@@ -209,7 +200,6 @@ namespace Ecommerce_Project.Controllers
                 return View(search);
 
             }
-            //List<Product>? products = db.Product.Include(x => x.Category).ToList();
         }
 
 

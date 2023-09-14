@@ -11,7 +11,6 @@ namespace Ecommerce_Project.ViewModels
         [Remote("UniqueName", "User", ErrorMessage = "This Name is already exits ")]
         public string Name { get; set; }
         [Key, DataType(DataType.EmailAddress)]
-        //[UniqueEmail]
         public string Email { get; set; }
         public string Address { get; set; }
         [Range(21, 60)]

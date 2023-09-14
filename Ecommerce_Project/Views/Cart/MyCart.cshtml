@@ -17,7 +17,6 @@
           var totalPrice = parseInt(totalPriceForItem) - parseInt(totalPriceForItemBeforeChanges) + parseInt(element.dataset.value);
           element.dataset.value = totalPrice;
           element.innerHTML = "$" + totalPrice.toString();
-          //$(totalPriceId).text((price*quantity).toString());
           document.getElementById(id.toString()).innerHTML = "$" + totalPriceForItem.toString();
           ele.dataset.quantity = ele.value;
         }
@@ -48,7 +47,6 @@
                   <th scope="col">Price</th>
                   <th scope="col">Availabel Quantity</th>
                   <th scope="col">Quantity</th>
-                  @*<th scope="col">Total Price</th>*@
                   <th scope="col"></th>
                   <th scope="col"></th>
                 </tr>
@@ -99,10 +97,8 @@
             <div class="form-group" style="margin:3px">
                 <input type="submit" value="CheckOut" onclick = "changeTypeTocheckout(this)" class="btn btn-success" />
             </div>
-            @*@Html.ActionLink("CheckOut","DeleteCartItem","Cart",new {cart = @Model},new {@class="btn btn-success"})*@
         </form>
     </div>
 </div>
 
-@*<p style="display:inline">Total Price: <h5 id="totalPrice" style="color:green;display:inline">$@totalPrice</h5></p>*@
 

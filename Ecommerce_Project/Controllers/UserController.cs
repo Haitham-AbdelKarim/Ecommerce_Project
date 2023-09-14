@@ -70,8 +70,6 @@ namespace Ecommerce_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(User user)
         {
-            //System.Web.HttpContext.Current.Server.MapPath(path);
-            //System.Web.Hosting.HostingEnvironment.MapPath(path);
             User? loggedUser = db.User.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
             if(loggedUser != null)
             {
@@ -182,7 +180,7 @@ namespace Ecommerce_Project.Controllers
 
         public IActionResult UniqueName(string name)
         {
-            User? user = db.User.FirstOrDefault(x => x.Name == name);
+            User? user = db.User.FirstOrDefault(x => x.Name == name && x.Email != getEmail());
             if (user == null)
             {
                 return Json(true);

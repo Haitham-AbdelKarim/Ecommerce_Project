@@ -11,12 +11,11 @@ namespace Ecommerce_Project.Models
         [Remote("UniqueName", "User", ErrorMessage = "This Name is already exits ")]
         public string Name { get; set; }
         [Key, DataType(DataType.EmailAddress)]
-        //[UniqueEmail]
         public string Email { get; set; }
         public string Address { get; set; }
         [Range(21,60)]
         public int Age { get; set; }
-        [StringLength(11)]
+        [RegularExpression("^\\d{11,11}$", ErrorMessage = "Phone should contain Numbers only with lenght 11")]
         public string Phone { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
