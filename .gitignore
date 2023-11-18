@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 Migrations/
 */Models/*Context.cs
+
+Ecommerce_Project/appsettings.json
