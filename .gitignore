@@ -398,7 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 Migrations/
-*/Models/*Context.cs
 
 Ecommerce_Project/appsettings.json
 Ecommerce_Project/appsettings.Development.json
