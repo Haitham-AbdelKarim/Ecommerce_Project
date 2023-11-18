@@ -23,7 +23,7 @@ To run this project locally:
 
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/Haitham-AbdelKarim/Ecommerce
+    git clone https://github.com/Haitham-AbdelKarim/Ecommerce_Project
     ```
 
 2. **Install packges**:
